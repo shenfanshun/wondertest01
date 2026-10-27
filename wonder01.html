@@ -1,0 +1,352 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>旺德福村討伐記</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* Layout: one centered card on a pond-green ground; cards slide sideways like a deck, a thin progress rail above. */
+:root {
+  --bg: #e9f1ea;
+  --surface: #fbfcf7;
+  --fg: #1d2c28;
+  --muted: #5a6d67;
+  --line: #c9d8cd;
+  --pond: #24564f;
+  --pond-fg: #f4faf6;
+  --atk: #d4602a;
+  --rec: #2a8c82;
+  --font-display: "LXGW WenKai TC", "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+  --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1a18;
+    --surface: #172522;
+    --fg: #e5efe9;
+    --muted: #9bb1aa;
+    --line: #2b3d38;
+    --pond: #6cc4b8;
+    --pond-fg: #0f1a18;
+    --atk: #f08a57;
+    --rec: #55bdb2;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1a18;
+  --surface: #172522;
+  --fg: #e5efe9;
+  --muted: #9bb1aa;
+  --line: #2b3d38;
+  --pond: #6cc4b8;
+  --pond-fg: #0f1a18;
+  --atk: #f08a57;
+  --rec: #55bdb2;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  padding-block: 20px 32px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  min-height: 100vh;
+}
+.wrap { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+
+.top { display: flex; flex-direction: column; gap: 8px; }
+.top-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.brand { font-family: var(--font-display); font-weight: 700; font-size: 17px; letter-spacing: .04em; }
+.count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: .06em; }
+.rail { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.rail > i { display: block; height: 100%; width: 0; background: var(--pond); border-radius: 3px; transition: width .45s ease; }
+
+.stage { position: relative; }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+.card.in-next { animation: inNext .38s ease both; }
+.card.in-prev { animation: inPrev .38s ease both; }
+@keyframes inNext { from { opacity: 0; transform: translateX(46px) rotate(1.5deg); } to { opacity: 1; transform: none; } }
+@keyframes inPrev { from { opacity: 0; transform: translateX(-46px) rotate(-1.5deg); } to { opacity: 1; transform: none; } }
+
+.tag { font-size: 12px; letter-spacing: .14em; color: var(--muted); }
+h1, h2 { font-family: var(--font-display); margin: 0; text-wrap: balance; }
+h1 { font-size: 30px; line-height: 1.3; }
+h2 { font-size: 21px; line-height: 1.6; font-weight: 700; }
+p { margin: 0; }
+.lead { font-family: var(--font-display); font-size: 19px; line-height: 1.9; }
+.small { font-size: 14px; color: var(--muted); }
+
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  text-align: left;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 14px;
+  cursor: pointer;
+  transition: border-color .15s, background-color .15s, transform .15s;
+}
+.opt:hover { border-color: var(--pond); }
+.opt:focus-visible, .btn:focus-visible, .link:focus-visible { outline: 3px solid var(--pond); outline-offset: 3px; }
+.opt.picked { border-color: var(--pond); background: color-mix(in srgb, var(--pond) 14%, transparent); transform: scale(.985); }
+.badge {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 16px;
+  background: var(--bg); border: 1.5px solid var(--line);
+}
+.opt.picked .badge { background: var(--pond); color: var(--pond-fg); border-color: var(--pond); }
+.opt-t { font-weight: 500; line-height: 1.5; padding-top: 4px; overflow-wrap: anywhere; }
+.opt-d { display: block; font-size: 14px; color: var(--muted); font-weight: 400; margin-top: 4px; line-height: 1.65; }
+
+.actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.btn {
+  font: inherit; font-weight: 700; letter-spacing: .08em;
+  background: var(--pond); color: var(--pond-fg);
+  border: 0; border-radius: 999px;
+  padding: 13px 30px; cursor: pointer;
+  transition: transform .15s, opacity .15s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn.full { width: 100%; padding-block: 16px; font-size: 17px; }
+.link { font: inherit; font-size: 14px; color: var(--muted); background: none; border: 0; padding: 6px 2px; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+
+/* result */
+.verdict { display: flex; flex-direction: column; gap: 4px; align-items: center; text-align: center; }
+.verdict h1 { font-size: 28px; }
+.pie-box { display: grid; place-items: center; }
+.pie { width: min(100%, 280px); height: auto; display: block; }
+.pie circle { fill: none; stroke-width: 38; }
+.pie .base { stroke: var(--rec); }
+.pie .arc { stroke: var(--atk); transition: stroke-dasharray 1.1s cubic-bezier(.2, .8, .2, 1); }
+.pie text { fill: var(--fg); font-family: var(--font-display); text-anchor: middle; }
+.pie .big { font-size: 34px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.pie .cap { font-size: 12px; fill: var(--muted); letter-spacing: .12em; font-family: var(--font-body); }
+.legend { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.lg { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border-radius: 14px; border: 1.5px solid var(--line); }
+.lg b { font-family: var(--font-display); font-size: 26px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.lg span { font-size: 13px; color: var(--muted); letter-spacing: .08em; }
+.lg .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.recap { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--line); padding-top: 14px; }
+.recap h3 { margin: 0 0 4px; font-size: 13px; letter-spacing: .14em; color: var(--muted); font-weight: 500; }
+.row { display: grid; grid-template-columns: 22px minmax(0, 1fr) 92px; gap: 10px; align-items: center; font-size: 14px; }
+.row .n { color: var(--muted); font-variant-numeric: tabular-nums; }
+.row .t { overflow-wrap: anywhere; line-height: 1.5; }
+.bar { height: 8px; border-radius: 4px; background: var(--rec); overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--atk); }
+
+@media (max-width: 420px) {
+  .card { padding: 24px 16px 20px; }
+  h1 { font-size: 26px; }
+  .row { grid-template-columns: 20px minmax(0, 1fr) 64px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card.in-next, .card.in-prev { animation: none; }
+  .rail > i, .pie .arc, .opt, .btn { transition: none; }
+}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div class="top-row">
+      <span class="brand">旺德福村討伐記</span>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="rail" aria-hidden="true"><i id="rail"></i></div>
+  </div>
+  <div class="stage" id="stage" aria-live="polite"></div>
+</div>
+
+<script>
+(function () {
+  var TOTAL = 12;
+  var cards = [
+    { type: "intro", text: "旺德福村正面臨一個嚴重的事件，魚池裡出現外來物種福瘦螺妖，並開始影響村民與果樹，這時候，你收到討伐邀請……" },
+    { type: "q", q: "你拿到阿嬤給的丸子，可以選一個靈寵當夥伴，你會將丸子給哪個吃收買牠呢？", opts: [
+      { t: "狗", a: 30 }, { t: "猴子", a: 75 }, { t: "雉雞", a: 55 } ] },
+    { type: "q", q: "長途跋涉抵達旺德福村，村長阿尼熱烈的歡迎各位討伐勇者，目前有三個任務給你選擇，你會選擇哪個？", opts: [
+      { t: "前往森林，討伐威脅村莊的怪物", a: 80 },
+      { t: "留在村莊，照顧受傷的勇者", a: 20 },
+      { t: "與另一位勇者組隊，探索未知的石洞", a: 55 } ] },
+    { type: "q", q: "經過一天的辛苦討伐，村民們舉辦了一場熱鬧的慶功宴，桌上擺滿了各式各樣的美食，香氣讓疲憊的你瞬間恢復精神。你最想吃哪一道料理呢？", opts: [
+      { t: "與好友分享美食拼盤", a: 55 },
+      { t: "先來一碗暖心奶油燉湯", a: 20 },
+      { t: "炭烤各式肉類海鮮", a: 80 } ] },
+    { type: "q", q: "大快朵頤之後，夜色漸深，村長阿尼熱情地邀請你留宿一晚，養足精神迎接明天的討伐！村裡的旅館剛好有三種特色房型，你會選擇住在哪一間呢？", opts: [
+      { t: "溫馨療癒小木屋", a: 30 },
+      { t: "浪漫星空雙人房", a: 55 },
+      { t: "豪華領主套房", a: 75 } ] },
+    { type: "q", q: "隔天醒來之後，發現身為女生的下面長了男生的雞雞，你在驚訝之餘，第一個反應是什麼呢？", opts: [
+      { t: "太有趣了，先自己玩一次看看", a: 60 },
+      { t: "找喜歡的人跟他分享", a: 90 },
+      { t: "完全忽視覺得很不舒服", a: 20 } ] },
+    { type: "q", q: "你還是決定到村裡的診所看一下，原來在討伐的時候，不小心被怪物的詛咒劃傷，但還好這個奇怪的狀態只有24小時，你鬆了口氣，這時候有三種治療方式，你會選擇？", opts: [
+      { t: "意志淨化術", d: "需要靠自己的意志力壓制詛咒，雖然過程有些辛苦，但命運還是要掌握在自己手裡！", a: 90 },
+      { t: "雙人共鳴術", d: "需要找一位信任的夥伴，一起分擔詛咒的力量渡過治療，感覺有人陪著也不錯！", a: 50 },
+      { t: "精靈療癒術", d: "躺在柔軟的魔法床上，由治療精靈全程細心照顧。什麼都不用做，只要乖乖接受治療就好！", a: 10 } ] },
+    { type: "q", q: "阿旺這時候匆匆忙忙地跑來，發現你在這邊，問你可不可以去幫他解決香蕉樹的怪物，你跟著他過去農場。請選擇你的武器。", opts: [
+      { t: "魔法雙刃劍", d: "可以自由切換攻擊與防禦模式，進可攻、退可守！看準時機靈活應戰，才是聰明勇者的選擇！", a: 50 },
+      { t: "霸氣巨斧", d: "超大一把戰斧，擁有驚人的破壞力！與其等待怪物出招，不如先發制人，用氣勢壓倒對手！", a: 90 },
+      { t: "守護魔法杖", d: "能召喚魔法護盾與守護精靈，讓精靈在前方戰鬥，自己則在後方施展輔助魔法，安全又安心！", a: 10 } ] },
+    { type: "q", q: "好不容易解決了香蕉樹的怪物，老師這時候開著小卡車過來，原來魚池的大魔王終於現身了，你趕緊跳上車子。小卡車上有三個位置可以選擇，你會坐在哪裡呢？", opts: [
+      { t: "副駕駛座", d: "當然要坐在老師旁邊！不但能第一時間掌握前方狀況，還能幫忙指路，必要時直接接手指揮！", a: 90 },
+      { t: "後座中間", d: "坐在夥伴們中間，大家可以一路聊天、討論作戰計畫，遇到突發狀況也能互相照應！", a: 50 },
+      { t: "後座靠窗", d: "找個舒服的位置靠著窗戶，沿途欣賞風景、補充體力。反正有老師帶路，安心跟著大家就好啦！", a: 10 } ] },
+    { type: "q", q: "福瘦螺大魔王出現在魚池的正中央，好多勇者也在現場討伐，這時候魚池的主人匆匆趕來，原來他找到了三件傳說中的寶物，可以幫助勇者對付大魔王！他急忙打開寶箱，要你選擇一件裝備，你會拿哪一個？", opts: [
+      { t: "無敵守護斗篷", d: "披上後會自動產生防護罩，還能召喚守護精靈幫你戰鬥！有人保護的感覺真安心！", a: 10 },
+      { t: "魔王剋星大砲", d: "擁有超強破壞力，只要瞄準就能發射致命一擊！與其等別人出手，不如自己直接解決！", a: 90 },
+      { t: "勇者羈絆戒指", d: "能與其他勇者共享魔力，大家互相支援、一起發動合體攻擊，團結力量大！", a: 50 } ] },
+    { type: "finish", text: "討伐成功了！村長阿尼感謝大家這次的討伐，我們來看看結果吧！" },
+    { type: "result" }
+  ];
+
+  var stage = document.getElementById("stage");
+  var countEl = document.getElementById("count");
+  var railEl = document.getElementById("rail");
+  var idx = 0;
+  var answers = {}; // card index -> option index
+  var locked = false;
+  var LETTERS = ["A", "B", "C"];
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  function average() {
+    var keys = Object.keys(answers);
+    if (!keys.length) return 50;
+    var sum = 0;
+    keys.forEach(function (k) { sum += cards[k].opts[answers[k]].a; });
+    return sum / keys.length;
+  }
+
+  function verdictFor(atk) {
+    if (atk >= 70) return ["攻氣滿格", "主動出擊、掌握節奏，遇到喜歡的人會先伸出手。"];
+    if (atk >= 56) return ["偏攻", "多數時候想走在前面，但也留著一點被照顧的空間。"];
+    if (atk > 44) return ["攻受平衡", "進可攻、退可守，會看對象和時機切換角色。"];
+    if (atk > 30) return ["偏受", "喜歡被陪伴、被照顧，必要時也能站出來。"];
+    return ["受氣滿格", "安心待在被守護的位置，享受對方的用心。"];
+  }
+
+  function render(dir) {
+    var c = cards[idx];
+    var el = document.createElement("section");
+    el.className = "card" + (dir === 1 ? " in-next" : dir === -1 ? " in-prev" : "");
+    var h = "";
+
+    if (c.type === "intro") {
+      h += '<span class="tag">序章</span>';
+      h += '<h1>旺德福村討伐記</h1>';
+      h += '<p class="lead">' + esc(c.text) + '</p>';
+      h += '<p class="small">共 9 題，憑直覺選出最像你的答案，最後會算出你的平均攻受比。</p>';
+      h += '<button class="btn full" id="go" type="button">接受邀請</button>';
+    } else if (c.type === "q") {
+      h += '<span class="tag">第 ' + (idx) + ' 題，共 9 題</span>';
+      h += '<h2>' + esc(c.q) + '</h2>';
+      h += '<div class="opts">';
+      c.opts.forEach(function (o, i) {
+        var picked = answers[idx] === i ? " picked" : "";
+        h += '<button type="button" class="opt' + picked + '" data-i="' + i + '">' +
+          '<span class="badge">' + LETTERS[i] + '</span>' +
+          '<span class="opt-t">' + esc(o.t) + (o.d ? '<span class="opt-d">' + esc(o.d) + '</span>' : '') + '</span></button>';
+      });
+      h += '</div>';
+      h += '<div class="actions"><button class="link" id="back" type="button">回上一張</button></div>';
+    } else if (c.type === "finish") {
+      h += '<span class="tag">終章</span>';
+      h += '<p class="lead">' + esc(c.text) + '</p>';
+      h += '<button class="btn full" id="show" type="button">查看結果</button>';
+      h += '<div class="actions"><button class="link" id="back" type="button">回上一張</button></div>';
+    } else {
+      var atk = Math.round(average());
+      var rec = 100 - atk;
+      var v = verdictFor(atk);
+      var C = 2 * Math.PI * 70;
+      h += '<div class="verdict"><span class="tag">你的平均攻受比</span><h1>' + v[0] + '</h1><p class="small">' + v[1] + '</p></div>';
+      h += '<div class="pie-box"><svg class="pie" viewBox="0 0 200 200" role="img" aria-label="攻 ' + atk + '%，受 ' + rec + '%">' +
+        '<circle class="base" cx="100" cy="100" r="70"/>' +
+        '<circle class="arc" id="arc" cx="100" cy="100" r="70" transform="rotate(-90 100 100)" style="stroke-dasharray:0 ' + C.toFixed(2) + '" data-full="' + (atk / 100 * C).toFixed(2) + '" data-c="' + C.toFixed(2) + '"/>' +
+        '<text class="big" x="100" y="104">' + atk + ' : ' + rec + '</text>' +
+        '<text class="cap" x="100" y="126">攻 : 受</text></svg></div>';
+      h += '<div class="legend">' +
+        '<div class="lg"><span><i class="dot" style="background:var(--atk)"></i>攻</span><b>' + atk + '%</b></div>' +
+        '<div class="lg"><span><i class="dot" style="background:var(--rec)"></i>受</span><b>' + rec + '%</b></div></div>';
+      h += '<button class="btn full" id="again" type="button">再玩一次</button>';
+    }
+
+    el.innerHTML = h;
+    stage.innerHTML = "";
+    stage.appendChild(el);
+
+    countEl.textContent = "卡片 " + (idx + 1) + " / " + TOTAL;
+    railEl.style.width = ((idx + 1) / TOTAL * 100) + "%";
+
+    var go = el.querySelector("#go");
+    if (go) go.addEventListener("click", function () { move(1); });
+    var show = el.querySelector("#show");
+    if (show) show.addEventListener("click", function () { move(1); });
+    var back = el.querySelector("#back");
+    if (back) back.addEventListener("click", function () { move(-1); });
+    var again = el.querySelector("#again");
+    if (again) again.addEventListener("click", function () { answers = {}; idx = 0; render(-1); window.scrollTo(0, 0); });
+
+    el.querySelectorAll(".opt").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (locked) return;
+        locked = true;
+        var i = Number(b.getAttribute("data-i"));
+        answers[idx] = i;
+        el.querySelectorAll(".opt").forEach(function (x) { x.classList.remove("picked"); });
+        b.classList.add("picked");
+        setTimeout(function () { locked = false; move(1); }, 300);
+      });
+    });
+
+    var arc = el.querySelector("#arc");
+    if (arc) {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          arc.style.strokeDasharray = arc.getAttribute("data-full") + " " + arc.getAttribute("data-c");
+        });
+      });
+    }
+  }
+
+  function move(d) {
+    var n = idx + d;
+    if (n < 0 || n >= TOTAL) return;
+    idx = n;
+    render(d);
+    var top = document.querySelector(".top");
+    if (top && top.getBoundingClientRect().top < 0) top.scrollIntoView({ block: "start" });
+  }
+
+  render(0);
+})();
+</script>
+
+</body></html>
